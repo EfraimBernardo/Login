@@ -3,154 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadástro</title>
+    <title>Login</title>
+
     <style>
-
-body{
-            background: #1C1F2B;
-            color: #ddd;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        .dadosCad{
-            background: #08294d;
-            position: absolute;
-            width: 35vw;
-            height: 52vh;
-            border-radius: 10px;
-            top: 20vh;
-            left: 32vw;
-            text-align: center;
-            outline: auto;
-            outline-color: #121212;
-            border: none;
-        }
-        .dadosCad input, button{
-            margin-top: 2vh;
-        }
-        .dadosCad button{
-            background: #1C1F2B;
-            padding: 6px;
-            width: 15vh;
-            border: none;
-            outline: auto;
-            outline-width: 1px;
-            outline-style: solid;
-            border-radius: 3px;
-            outline-color: #ddd;color: #ddd;
-        }
-        .dadosCad input{
-            width: 30vh;
-            padding: 8px;
-            outline: auto;
-            outline-color: #1C1F2B;
-            outline-style: solid;
-            outline-width: 1px;
-            border: node;
-            border-radius: 5px;
-        }
-        @media(min-width: 480px){
-            .dadosCad{
-                width: 80vw;
-                left: 9.8%;
-                top: 30vh;
-            }
-        }
-        @media(min-width: 392px){
-            .dadosCad{
-                width: 80vw;
-                height: 70vh;
-                left: 9.8%;
-                top: 15vh;
-            }
-        }
-        @media(min-width: 480){
-            .dadosCad{
-                height: 46vh;
-            }
-        }
-        @media(min-width: 1024px){
-            .dadosCad{
-            background: #08294d;
-            position: absolute;
-            width: 35vw;
-            height: 40vh;
-            border-radius: 10px;
-            top: 20vh;
-            left: 32vw;
-            text-align: center;
-            outline: auto;
-            outline-color: #121212;
-            border: none;
-        }
-        .dadosCad input, button{
-            margin-top: 2vh;
-        }
-        .dadosCad button{
-            background: #1C1F2B;
-            padding: 6px;
-            width: 15vh;
-            border: none;
-            outline: auto;
-            outline-width: 1px;
-            outline-style: solid;
-            border-radius: 3px;
-            outline-color: #ddd;color: #ddd;
-        }
-        .dadosCad input{
-            width: 30vh;
-            padding: 8px;
-            outline: auto;
-            outline-color: #1C1F2B;
-            outline-style: solid;
-            outline-width: 1px;
-            border: node;
-            border-radius: 5px;
-        }
-        }
-
+        body{
+    background: white;
+}
+h1{
+    text-align: center;
+}
+#formulario{
+    background: #bbb;
+    position: relative;
+    text-align: center;
+    margin-top: 25vh;
+    width: 40vw;
+    height: 40vh;
+    box-shadow: 7px 7px 7px #aaa;
+    border-radius: 5px;
+    margin-left: 30%;
+    button{
+        width: 20vh;
+        background-color: rgb(14, 73, 223);
+        height: 3vh;
+        outline: none;
+        border: none;
+        border-radius: 2px;
+        margin-left: 15vw;
+    }
+}
+#formulario textarea, select, label, input, button{
+    display: block;
+    position: relative;
+    margin-top: 2vh;
+}
+#formulario textarea, select, input{
+    margin-left: 10vw;
+}
+#formulario textarea, select, input{
+    position: relative;
+    width: 50%;
+    height: 4vh;
+}
     </style>
+
 </head>
 <body>
-    
-    <div class="dadosCad">
-        <h2>Cadástre-se</h2>
+    <h1>Faça Login</h1>
+
         <form id="formulario">
-            <input type="text" name="nome" id="nome" placeholder="Digite o seu nome" required><br>
-            <input type="email" name="email" id="email" placeholder="Digite o seu E-mail" required><br>
-            <input type="number" name="numero" id="pass" placeholder="Diite o seu número" required /><br>
-            <input type="password" name="pass" id="pass" placeholder="Digite a sua Palavra-apsse" required /><br>
-            <input type="password" name="passb" id="passb" placeholder="Confirme a sua Palavra-apsse" required><br><br>
-            <button type="submit" onclick="enviar()">Enviar</button><br><br>
-            Já ten uma conta? <a href="login.html" style="color: #777;">Faça Login!</a>
+            <label>E-mail</label>
+            <input type="email" name="email" placeholder="Digite o seu E-mail" required>
+            <label>Palavra-passe</label>
+            <input type="password" name="password" placeholder="Digite a Palavra-passe(****)" required>
+            <button type="submit">Entrar</button>
         </form>
-    </div>
 
-    <script>
-        document.getElementById("formulario").addEventListener("submit", async function (event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-
-            const resposta = await fetch("/enviar", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
+        <script>
+            document.getElementById("formulario").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+    
+                const resposta = await fetch("/enviar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+    
+                const resultado = await resposta.text();
+                alert(resultado);
             });
 
-            const resultado = await resposta.text();
-            alert(resultado);
-        });
-
-        function enviar(){
-            let Pass = document.getElementById('pass').value;
-            let PassB = document.getElementById('passb').value;
-            if(Pass =! PassB){
-                alert("As palavra-passes não convergem!");
-            }
-        }
-    </script>
+        </script>
 
 </body>
 </html>
